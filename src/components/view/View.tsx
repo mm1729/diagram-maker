@@ -447,10 +447,16 @@ class View<NodeType, EdgeType> extends Preact.Component<ViewProps<NodeType, Edge
       this.props.configService,
       isEdgePair,
     );
-    const edgeStyle = isEdgePair ? EdgeStyle.QUADRATIC_BEZIER : getEdgeStyle(
-      getConnectorPlacementForNode(edgeSource, this.props.configService),
-      getConnectorPlacementForNode(edgeDestination, this.props.configService),
-    );
+
+    let edgeStyle;
+    if (this.props.configService.isAngledEdgesEnabled()) {
+      edgeStyle = EdgeStyle.ANGLED_MANHATTAN;
+    } else {
+      edgeStyle = isEdgePair ? EdgeStyle.QUADRATIC_BEZIER : getEdgeStyle(
+        getConnectorPlacementForNode(edgeSource, this.props.configService),
+        getConnectorPlacementForNode(edgeDestination, this.props.configService),
+      );
+    }
 
     return (
       <Edge
@@ -463,6 +469,7 @@ class View<NodeType, EdgeType> extends Preact.Component<ViewProps<NodeType, Edge
         edgeStyle={edgeStyle}
         selected={edges[edgeKey].diagramMakerData.selected}
         showArrowhead={this.props.configService.getShowArrowhead()}
+        vertices={edges[edgeKey].diagramMakerData.vertices}
       />
     );
   }

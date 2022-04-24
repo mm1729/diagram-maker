@@ -39,6 +39,7 @@ export default function edgeReducer<NodeType, EdgeType>(
           diagramMakerData,
           id,
           src,
+          
         };
       });
     case (EdgeActionsType.EDGE_SELECT):

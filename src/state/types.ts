@@ -174,6 +174,8 @@ export interface DiagramMakerEdge<EdgeType> {
   readonly diagramMakerData: {
     /** Denotes whether the edge is selected */
     readonly selected?: boolean;
+    /** Positions of vertices for an angled edge */
+    readonly vertices?: Position[];
   };
   /** Contains data managed by the consumer */
   readonly consumerData?: EdgeType;

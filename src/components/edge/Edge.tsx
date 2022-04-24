@@ -18,6 +18,7 @@ export interface EdgeProps {
   selected?: boolean;
   className?: string | string[];
   showArrowhead?: boolean;
+  vertices?: Position[];
 }
 
 // @TODO: Make edge and label fully interactive like nodes
@@ -28,17 +29,18 @@ export default class Edge extends Preact.Component<EdgeProps> {
     edgeStyle: EdgeStyle,
     className: string,
     showArrowhead?: boolean,
-  ) => <EdgeCurve src={src} dest={dest} edgeStyle={edgeStyle} className={className} showArrowhead={showArrowhead} />;
+    vertices?: Position[]
+  ) => <EdgeCurve src={src} dest={dest} edgeStyle={edgeStyle} className={className} showArrowhead={showArrowhead} vertices={vertices} />;
 
   public render() {
     const {
-      src, dest, className, edgeStyle, id, selected, showArrowhead,
+      src, dest, className, edgeStyle, id, selected, showArrowhead, vertices
     } = this.props;
 
     const classNames = classnames('dm-edge', className, { 'dm-selected': selected });
 
-    const curvePathInner = Edge.getCurve(src, dest, edgeStyle, 'dm-path-inner', showArrowhead);
-    const curvePathOuter = Edge.getCurve(src, dest, edgeStyle, 'dm-path-outer', showArrowhead);
+    const curvePathInner = Edge.getCurve(src, dest, edgeStyle, 'dm-path-inner', showArrowhead, vertices);
+    const curvePathOuter = Edge.getCurve(src, dest, edgeStyle, 'dm-path-outer', showArrowhead, vertices);
 
     return (
       <g

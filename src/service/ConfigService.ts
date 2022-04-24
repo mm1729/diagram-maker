@@ -274,6 +274,11 @@ export interface DiagramMakerConfig<NodeType, EdgeType> {
      * Defaults to false.
      */
     showArrowhead?: boolean;
+    /**
+     * Draw angled edges with vertices that avoid intersection with other nodes
+     * Defaults to false
+     */
+    enableAngledEdges?: boolean;
   };
   /**
    * Render Callbacks for rendering nodes, potential nodes, edges, panels,
@@ -360,6 +365,8 @@ export default class ConfigService<NodeType, EdgeType> {
   ) || ConnectorPlacement.CENTERED;
 
   public getShowArrowhead = (): boolean => (this.config.options && this.config.options.showArrowhead) || false;
+
+  public isAngledEdgesEnabled = (): boolean => (this.config.options && this.config.options.enableAngledEdges) || false;
 
   public getActionInterceptor = (): ActionInterceptor<NodeType, EdgeType> | undefined => this.config.actionInterceptor;
 

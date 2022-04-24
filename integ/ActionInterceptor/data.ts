@@ -23,7 +23,12 @@ const graph: DiagramMakerData<{}, {}> = {
       id: 'edge1',
       src: 'node1',
       dest: 'node2',
-      diagramMakerData: { },
+      diagramMakerData: { 
+        vertices: [
+          {x : 300, y : 60}
+        ]
+      },
+      consumerData: 'ANGLED_MANHATTAN'
     },
   },
   panels: {

@@ -86,6 +86,7 @@ const Template = ({
       options: {
         connectorPlacement: connectorPlacement || ConnectorPlacement.LEFT_RIGHT,
         showArrowhead: showArrowhead || false,
+        enableAngledEdges: true
       },
       renderCallbacks: {
         destroy: () => undefined,
