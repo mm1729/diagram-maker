@@ -171,6 +171,7 @@ const Template = ({
                 id: `${diagramMakerAction.payload.id}-2`,
                 src: diagramMakerAction.payload.dest,
                 dest: diagramMakerAction.payload.src,
+                consumerData: 'ANGLED_MANHATTAN'
               },
             };
             setTimeout(() => next(newAction), 1000);

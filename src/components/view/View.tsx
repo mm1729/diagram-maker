@@ -21,6 +21,7 @@ import {
 } from 'diagramMaker/state/types';
 
 import './View.scss';
+import SimpleManhattan from '../router/SimpleManhattan';
 
 const CONNECTOR_PLACEMENT_TO_EDGE_TYPE = {
   [ConnectorPlacement.LEFT_RIGHT]: EdgeStyle.LEFT_RIGHT_BEZIER,
@@ -449,8 +450,18 @@ class View<NodeType, EdgeType> extends Preact.Component<ViewProps<NodeType, Edge
     );
 
     let edgeStyle;
+    let vertices: Position[] = [];
     if (this.props.configService.isAngledEdgesEnabled()) {
       edgeStyle = EdgeStyle.ANGLED_MANHATTAN;
+      //console.log('here');
+      vertices = SimpleManhattan({
+        src: edgeSource, 
+        dest: edgeDestination,
+        srcCoordinates: edgeCoordinates.src, 
+        destCoordinates: edgeCoordinates.dest, 
+        padding: 25, 
+        configService: this.props.configService
+      });
     } else {
       edgeStyle = isEdgePair ? EdgeStyle.QUADRATIC_BEZIER : getEdgeStyle(
         getConnectorPlacementForNode(edgeSource, this.props.configService),
@@ -469,7 +480,7 @@ class View<NodeType, EdgeType> extends Preact.Component<ViewProps<NodeType, Edge
         edgeStyle={edgeStyle}
         selected={edges[edgeKey].diagramMakerData.selected}
         showArrowhead={this.props.configService.getShowArrowhead()}
-        vertices={edges[edgeKey].diagramMakerData.vertices}
+        vertices={vertices}
       />
     );
   }
@@ -606,6 +617,18 @@ class View<NodeType, EdgeType> extends Preact.Component<ViewProps<NodeType, Edge
       getConnectorPlacementForNode(nodes[edge.src], this.props.configService),
       this.props.configService.getConnectorPlacement(),
     );
+
+    let vertices: Position[] = [];
+    /*if (this.props.configService.isAngledEdgesEnabled()) {
+      vertices = SimpleManhattan({
+        src: nodes[edge.src], 
+        srcCoordinates: sourceCoordinates, 
+        destCoordinates: edge.position, 
+        padding: 5, 
+        configService: this.props.configService
+      });
+    }*/
+
     return (
       <PotentialEdge
         key="potentialEdge"
@@ -613,6 +636,7 @@ class View<NodeType, EdgeType> extends Preact.Component<ViewProps<NodeType, Edge
         dest={edge.position}
         edgeStyle={edgeStyle}
         showArrowhead={this.props.configService.getShowArrowhead()}
+        vertices={vertices}
       />
     );
   }
